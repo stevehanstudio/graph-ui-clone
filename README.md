@@ -1,6 +1,6 @@
 # Graph-UI
 
-This is my fork of the main branch of the Graph UI project for Plenful's Open Avenues micro-internship.  In this project we built a web application to visualize a complex recursive data structure using Typescript, React, Material UI, and D3.js.
+This is my fork of the main branch of the Graph UI project for Plenful's micro-internship with Open Avenues.  In this project, we built a web application to visualize a complex recursive data structure using Typescript, React, Material UI, and D3.js.
 
 ## Team
 Sanjeev Vijayaraj, Project Leader\
@@ -43,11 +43,15 @@ npm run deploy
 * [Material UI tree view documentation](https://mui.com/material-ui/react-tree-view/).  I used the code for rich object as reference
 * [How to create a type for complex JSON object in Typescript](https://dev.to/ankittanna/how-to-create-a-type-for-complex-json-object-in-typescript-d81)
 * [Rendering objects in React (Stackoverflow)](https://stackoverflow.com/questions/45100477/how-to-render-a-object-in-react)
-[Material UI installation doesn't work with React 18 (Stackoverflow)](https://stackoverflow.com/questions/71713111/mui-installation-doesnt-work-with-react-18)<br/>
-[Material UI TreeView](https://mui.com/material-ui/react-tree-view/)<br/>
-[How to create a type for complex JSON object in Typescript](https://dev.to/ankittanna/how-to-create-a-type-for-complex-json-object-in-typescript-d81)<br/>
-[Rendering objects in React (Stackoverflow)](https://stackoverflow.com/questions/45100477/how-to-render-a-object-in-react)
-[Material UI installation doesn't work with React 18 (Stackoverflow)](https://stackoverflow.com/questions/71713111/mui-installation-doesnt-work-with-react-18)<br/>
-[Material UI tree view documentation.  I used the code for rich object as reference](https://mui.com/material-ui/react-tree-view/)<br/>
-[How to create a type for complex JSON object in Typescript](https://dev.to/ankittanna/how-to-create-a-type-for-complex-json-object-in-typescript-d81)<br/>
-[Rendering objects in React (Stackoverflow)](https://stackoverflow.com/questions/45100477/how-to-render-a-object-in-react)
+* [Material UI installation doesn't work with React 18 (Stackoverflow)](https://stackoverflow.com/questions/71713111/mui-installation-doesnt-work-with-react-18)<br/>
+* [Material UI TreeView](https://mui.com/material-ui/react-tree-view/)<br/>
+* [How to create a type for complex JSON object in Typescript](https://dev.to/ankittanna/how-to-create-a-type-for-complex-json-object-in-typescript-d81)<br/>
+* [Rendering objects in React (Stackoverflow)](https://stackoverflow.com/questions/45100477/how-to-render-a-object-in-react)
+* [Material UI installation doesn't work with React 18 (Stackoverflow)](https://stackoverflow.com/questions/71713111/mui-installation-doesnt-work-with-react-18)<br/>
+* [Material UI tree view documentation.  I used the code for rich object as reference](https://mui.com/material-ui/react-tree-view/)<br/>
+* [How to create a type for complex JSON object in Typescript](https://dev.to/ankittanna/how-to-create-a-type-for-complex-json-object-in-typescript-d81)<br/>
+* [Rendering objects in React (Stackoverflow)](https://stackoverflow.com/questions/45100477/how-to-render-a-object-in-react)
+* [D3.js Data Visualization Fundamentals - Hands On]
+(https://www.udemy.com/course/d3jsbasics/)
+* [Complete Git and GitHub guide - Master all Git features: commits, branches, merging, rebasing and squashing](https://www.udemy.com/course/git-and-github-complete-guide/) - Great course that goes under the hood of Git.
+
