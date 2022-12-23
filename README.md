@@ -31,7 +31,8 @@ npm install
 
 ## Deployment
 
-I've set this project up to deploy to Github pages.  To deploy
+I've set this project up to deploy to Github pages.  To deploy, first edit package.json. The homepage key is current set to https://stevehanstudio.github.io/graph-ui-clone.  Change stevehanstudio to your Github username.  You can also change graph-ui-clone to another name if you like.  Next run the commands:
+
 ```
 npm run predeploy
 npm run deploy
@@ -56,5 +57,4 @@ npm run deploy
 * [How to create a type for complex JSON object in Typescript](https://dev.to/ankittanna/how-to-create-a-type-for-complex-json-object-in-typescript-d81)<br/>
 * [Rendering objects in React (Stackoverflow)](https://stackoverflow.com/questions/45100477/how-to-render-a-object-in-react)<br/>
 * [D3.js Data Visualization Fundamentals - Hands On](https://www.udemy.com/course/d3jsbasics/)<br/>
-* [Complete Git and GitHub guide - Master all Git features: commits, branches, merging, rebasing and squashing](https://www.udemy.com/course/git-and-github-complete-guide/) - Great course that goes under the hood of Git.
-
+* [Complete Git and GitHub guide - Master all Git features: commits, branches, merging, rebasing and squashing](https://www.udemy.com/course/git-and-github-complete-guide/) - Great course that goes under the hood of Git that helped me with the rebasing and merging.
