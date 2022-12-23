@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Graph-UI/static/css/main.3095236c.css",
+    "main.js": "/Graph-UI/static/js/main.20acdd6b.js",
+    "index.html": "/Graph-UI/index.html",
+    "main.3095236c.css.map": "/Graph-UI/static/css/main.3095236c.css.map",
+    "main.20acdd6b.js.map": "/Graph-UI/static/js/main.20acdd6b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3095236c.css",
+    "static/js/main.20acdd6b.js"
+  ]
+}
