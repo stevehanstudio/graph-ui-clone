@@ -8,6 +8,10 @@ Steve Han,  Software Developer Intern\
 Ian Wong, Software Developer Intern\
 Kyle Wu,  Software Developer Intern
 
+## Live Demo
+
+[Live demo deployed on Github Pages](https://stevehanstudio.github.io/graph-ui-clone)
+
 ## Screenshot
 <img src="graph_lib/public/graph-ui-screenshot.jpg" alt="screenshot" />
 
@@ -35,4 +39,15 @@ npm run deploy
 
 ## Reference
 
-Coming soon...
+* [Material UI installation doesn't work with React 18 (Stackoverflow)](https://stackoverflow.com/questions/71713111/mui-installation-doesnt-work-with-react-18)
+* [Material UI tree view documentation](https://mui.com/material-ui/react-tree-view/).  I used the code for rich object as reference
+* [How to create a type for complex JSON object in Typescript](https://dev.to/ankittanna/how-to-create-a-type-for-complex-json-object-in-typescript-d81)
+* [Rendering objects in React (Stackoverflow)](https://stackoverflow.com/questions/45100477/how-to-render-a-object-in-react)
+[Material UI installation doesn't work with React 18 (Stackoverflow)](https://stackoverflow.com/questions/71713111/mui-installation-doesnt-work-with-react-18)<br/>
+[Material UI TreeView](https://mui.com/material-ui/react-tree-view/)<br/>
+[How to create a type for complex JSON object in Typescript](https://dev.to/ankittanna/how-to-create-a-type-for-complex-json-object-in-typescript-d81)<br/>
+[Rendering objects in React (Stackoverflow)](https://stackoverflow.com/questions/45100477/how-to-render-a-object-in-react)
+[Material UI installation doesn't work with React 18 (Stackoverflow)](https://stackoverflow.com/questions/71713111/mui-installation-doesnt-work-with-react-18)<br/>
+[Material UI tree view documentation.  I used the code for rich object as reference](https://mui.com/material-ui/react-tree-view/)<br/>
+[How to create a type for complex JSON object in Typescript](https://dev.to/ankittanna/how-to-create-a-type-for-complex-json-object-in-typescript-d81)<br/>
+[Rendering objects in React (Stackoverflow)](https://stackoverflow.com/questions/45100477/how-to-render-a-object-in-react)
