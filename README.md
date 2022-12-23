@@ -19,23 +19,23 @@ Kyle Wu,  Software Developer Intern
 
 - First clone this repository
 
-`
+```
 git clone git@github.com:stevehanstudio/Graph-UI.git
-`
+```
 
-- Next change into cloned folder, then<br/>
-`
-cd graph_lib<br/>
+- Next change into cloned folder, then
+```
+cd graph_lib
 npm install
-`
+```
 
 ## Deployment
 
 I've set this project up to deploy to Github pages.  To deploy
-`
-npm run predeploy<br/>
-npm run deploy<br/>
-`
+```
+npm run predeploy
+npm run deploy
+```
 
 ## Notes:
 
@@ -43,10 +43,10 @@ npm run deploy<br/>
 
 ## Reference
 
-* [Material UI installation doesn't work with React 18 (Stackoverflow)](https://stackoverflow.com/questions/71713111/mui-installation-doesnt-work-with-react-18)
-* [Material UI tree view documentation](https://mui.com/material-ui/react-tree-view/).  I used the code for rich object as reference
-* [How to create a type for complex JSON object in Typescript](https://dev.to/ankittanna/how-to-create-a-type-for-complex-json-object-in-typescript-d81)
-* [Rendering objects in React (Stackoverflow)](https://stackoverflow.com/questions/45100477/how-to-render-a-object-in-react)
+* [Material UI installation doesn't work with React 18 (Stackoverflow)](https://stackoverflow.com/questions/71713111/mui-installation-doesnt-work-with-react-18)<br/>
+* [Material UI tree view documentation](https://mui.com/material-ui/react-tree-view/).  I used the code for rich object as reference<br/>
+* [How to create a type for complex JSON object in Typescript](https://dev.to/ankittanna/how-to-create-a-type-for-complex-json-object-in-typescript-d81)<br/>
+* [Rendering objects in React (Stackoverflow)](https://stackoverflow.com/questions/45100477/how-to-render-a-object-in-react)<br/>
 * [Material UI installation doesn't work with React 18 (Stackoverflow)](https://stackoverflow.com/questions/71713111/mui-installation-doesnt-work-with-react-18)<br/>
 * [Material UI TreeView](https://mui.com/material-ui/react-tree-view/)<br/>
 * [How to create a type for complex JSON object in Typescript](https://dev.to/ankittanna/how-to-create-a-type-for-complex-json-object-in-typescript-d81)<br/>
