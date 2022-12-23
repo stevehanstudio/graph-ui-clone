@@ -19,9 +19,13 @@ Kyle Wu,  Software Developer Intern
 
 - First clone this repository
 
-- Next change into cloned folder, then
 `
-cd graph_lib\
+git clone git@github.com:stevehanstudio/Graph-UI.git
+`
+
+- Next change into cloned folder, then<br/>
+`
+cd graph_lib<br/>
 npm install
 `
 
@@ -29,8 +33,8 @@ npm install
 
 I've set this project up to deploy to Github pages.  To deploy
 `
-npm run predeploy\
-npm run deploy
+npm run predeploy<br/>
+npm run deploy<br/>
 `
 
 ## Notes:
@@ -50,8 +54,7 @@ npm run deploy
 * [Material UI installation doesn't work with React 18 (Stackoverflow)](https://stackoverflow.com/questions/71713111/mui-installation-doesnt-work-with-react-18)<br/>
 * [Material UI tree view documentation.  I used the code for rich object as reference](https://mui.com/material-ui/react-tree-view/)<br/>
 * [How to create a type for complex JSON object in Typescript](https://dev.to/ankittanna/how-to-create-a-type-for-complex-json-object-in-typescript-d81)<br/>
-* [Rendering objects in React (Stackoverflow)](https://stackoverflow.com/questions/45100477/how-to-render-a-object-in-react)
-* [D3.js Data Visualization Fundamentals - Hands On]
-(https://www.udemy.com/course/d3jsbasics/)
+* [Rendering objects in React (Stackoverflow)](https://stackoverflow.com/questions/45100477/how-to-render-a-object-in-react)<br/>
+* [D3.js Data Visualization Fundamentals - Hands On](https://www.udemy.com/course/d3jsbasics/)<br/>
 * [Complete Git and GitHub guide - Master all Git features: commits, branches, merging, rebasing and squashing](https://www.udemy.com/course/git-and-github-complete-guide/) - Great course that goes under the hood of Git.
 
