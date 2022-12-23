@@ -1,0 +1,84 @@
+.grid {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: start;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: flex-start;
+    border-left: 2px solid black;
+}
+
+/* Don't want the last node to expand to full height, which doesn't connect the previous node (there isn't one) and looks ugly*/
+.grid > .row:not(:nth-last-child(2)) {
+    align-self: stretch;
+    align-items: flex-start;
+}
+
+.node {
+    border: 2px solid black;
+    border-radius: 50%;
+    padding: 1% 2%;
+    justify-self: start;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.row:hover + .node, .row:hover + div > .componentTitle {
+    box-shadow: 0 0 10px black;
+}
+
+.nodeDepth0 {
+    background-color: coral;
+}
+
+.nodeDepth1 {
+    background-color: lightcoral;
+}
+
+.nodeDepth2 {
+    background-color: orange;
+}
+
+.nodeDepth3 {
+    background-color: lightgreen;
+}
+
+.nodeDepth4 {
+    background-color: lightseagreen;
+}
+
+.nodeDepth5 {
+    background-color: plum;
+}
+
+.collapsedObject {
+    display: none;
+}
+
+.edgeLine {
+    border-top: 2px dashed black;
+    /* Try to align with node height, which has 4px of margin, 2px of border, 8px of padding, and roughly 0.5rem of text height */
+    margin-top: calc(4px + 8px + 2px + 0.5rem);
+    min-width: 50px;
+    /* Stretch line to fill space */
+    flex: 1;
+}
+
+.componentTitle {
+    margin-top: 8px;
+    margin-right: 8px;
+    padding: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-self: left;
+    border: 2px solid black;
+    margin-right: auto;
+}
+
+.componentTitle > button {
+    margin-left: 8px;
+}

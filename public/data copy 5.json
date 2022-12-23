@@ -1,0 +1,10 @@
+{
+	"name": "Steve",
+	"level": 0,
+	"obj": {
+		"level": 1,
+		"obj": {
+			"level": 2
+		}
+	}
+}

@@ -1,0 +1,40 @@
+{"lesson 1":[
+    {"part one": [
+        {"question": "What is the meaning of 'واد' ?",
+        "transliteration": "walid",
+        "answer": "boy"
+        },
+        {"question": "What is the meaning of 'بنت' ?",
+        "transliteration": "bint",
+        "answer": "girl"
+        },
+        {"question": "What is the meaning of 'رخل' ?",
+        "transliteration": "ragul",
+        "answer": "man"
+        },
+        {"question": "What is the meaning of 'ست' ?",
+        "transliteration": "sit",
+        "answer": "woman"
+        }
+    ],
+    "part two": [
+        {"question": "What is the meaning of '2test1'?",
+        "transliteration": "phonix",
+        "answer": "21"
+        },
+        {"question": "What is the meaning of '2test2'?",
+        "transliteration": "phonix2",
+        "answer": "22"
+        }
+    ],
+    "part three": [
+        {"question": "What is the meaning of '3test1'?",
+        "transliteration": "phonix",
+        "answer": "31"
+        },
+        {"question": "What is the meaning of '3test2'?",
+        "transliteration": "phonix2",
+        "answer": "32"
+        }
+    ]}
+]}

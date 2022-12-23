@@ -1,0 +1,358 @@
+import * as d3 from "d3";
+import React from "react";
+import { useEffect, useRef } from "react";
+import styles from "../styles/d3tree.module.css";
+
+export enum TreeOrientation {
+    Horizontal, Vertical
+}
+
+export enum TreeType {
+    TidyTree,
+    Dendrogram,
+}
+
+export interface Props {
+    // Any JavaScript object
+    data: any;
+    // Controls spacing between each node
+    nodeWidth: number;
+    nodeHeight: number;
+    // Padding on right side of graph (for text for children)
+    paddingRight: number;
+    treeType?: TreeType;
+    treeOrientation?: TreeOrientation;
+    // Maximum intial "zoom out" of graph. Default is 1000
+    maxSvgViewboxDimensions?: number;
+}
+
+interface CustomNode extends d3.HierarchyNode<unknown> {
+    label?: string;
+    // Full, untruncated label not normally displayed
+    fullLabel?: string;
+}
+
+interface CustomPointNode extends d3.HierarchyPointNode<unknown> {
+    label?: string;
+    sourceLink?: CustomPointLink;
+    childrenLinks?: CustomPointLink[];
+    svgCircleElement?: SVGCircleElement;
+    originalRadius?: number;
+}
+
+interface CustomPointLink extends d3.HierarchyPointLink<unknown> {
+    svgElement?: SVGPathElement;
+    source: CustomPointNode;
+    target: CustomPointNode;
+    originalStroke?: CSSStyleDeclaration["stroke"];
+}
+
+function setChildrenOnHover(node: CustomPointNode) {
+    if (node.svgCircleElement) {
+        node.originalRadius = node.svgCircleElement.r.baseVal.value;
+        d3.select(node.svgCircleElement)
+            .classed(styles.circleNodeHighlight, true)
+            .transition().duration(500).delay(0)
+            .attr("r", 2)
+    }
+    for (const link of node.childrenLinks || []) {
+        if (link.svgElement) {
+            d3.select(link.svgElement).classed(styles.linkHighlight, true);
+            link.originalStroke = link.svgElement?.style.stroke;
+        }
+    }
+    if (node.children) {
+        for (const child of node.children) {
+            setChildrenOnHover(child);
+        }
+    }
+}
+
+function setChildrenAfterHover(node: CustomPointNode) {
+    if (node.svgCircleElement && node.originalRadius) {
+        d3.select(node.svgCircleElement).classed(styles.circleNodeHighlight, false)
+            .transition().duration(500).delay(0)
+            .attr("r", node.originalRadius)
+    }
+    for (const link of node.childrenLinks || []) {
+        if (link.svgElement) {
+            d3.select(link.svgElement).classed(styles.linkHighlight, false);
+        }
+    }
+    if (node.children) {
+        for (const child of node.children) {
+            setChildrenAfterHover(child);
+        }
+    }
+}
+
+function setHierarchyLabels(node: CustomNode) {
+    if (!node.children) {
+        // node.label = node.data;
+        return;
+    }
+    if (node.children.length === 1 && node.children[0].data === null) {
+        node.children[0].label = String(node.data);
+        return;
+    }
+    const objectKeys: string[] = Object.keys(node.data);
+    for (let i = 0; i < node.children.length; ++i) {
+        node.children[i].label = objectKeys[i];
+        setHierarchyLabels(node.children[i]);
+    }
+}
+
+function replaceTextOverflowEllipsis(el: SVGTextElement, maxWidth: number) {
+    const textContent = el.textContent;
+    let substrEnd = textContent?.length;
+    if (!substrEnd || !textContent) {
+        return;
+    }
+    // Also stop if already at ellipsis and still too long
+    while (el.getSubStringLength(0, substrEnd) > maxWidth && el.textContent !== "...") {
+        --substrEnd;
+        el.textContent = el.textContent?.slice(0, substrEnd) + "...";
+    }
+}
+
+class ViewController {
+    x: number;
+    y: number;
+    viewboxHeight; number;
+    viewboxWidth: number;
+    zoom: number = 1;
+    scrollSensitivity: number = 0.001;
+    // The actual svg element
+    svgElement: SVGSVGElement;
+    // Element containing all other elements in SVG image
+    svgMainGroupElement: SVGElement;
+
+    isMouseDown: boolean = false;
+
+    constructor(svgElement: SVGSVGElement, svgMainGroupElement: SVGElement) {
+        this.svgElement = svgElement;
+        this.svgMainGroupElement = svgMainGroupElement;
+        const viewBox = svgElement.viewBox.baseVal;
+        this.x = viewBox.x;
+        this.y = viewBox.y;
+    }
+
+    updateSVGView(): void {
+        this.svgElement.viewBox.baseVal.x = this.x;
+        this.svgElement.viewBox.baseVal.y = this.y;
+    }
+
+    handleMouseMove(event: PointerEvent): void {
+        if (event.buttons & 1) {
+            // Because we are changing the offset of the svg, we want to subtract
+            this.x -= event.movementX * (this.svgElement.viewBox.baseVal.width / this.svgElement.getBoundingClientRect().width);
+            this.y -= event.movementY * (this.svgElement.viewBox.baseVal.height / this.svgElement.getBoundingClientRect().height);
+            // this.x = event.clientX;
+            // this.y = event.clientY;
+            this.updateSVGView();
+        }
+    }
+
+    handleWheel(event: WheelEvent) {
+        const scrollAmount = event.deltaY * this.scrollSensitivity;
+        this.zoom += scrollAmount;
+        event.preventDefault();
+        const viewBoxChange = scrollAmount * 10;
+        const viewBox = this.svgElement.viewBox.baseVal;
+
+        const boundingRect: DOMRect = this.svgElement.getBoundingClientRect();
+
+        const mouseXElement: number = event.clientX - boundingRect.x;
+        const mouseYElement: number = event.clientY - boundingRect.y;
+
+        // Coordinates of mouse in the coordinates of the SVG image
+        // Multiply fraction of element width/height of width/height in SVG and add offset
+        const mouseXInSVG: number = (mouseXElement / boundingRect.width) * viewBox.width + viewBox.x;
+        const mouseYInSVG: number = (mouseYElement / boundingRect.height) * viewBox.height + viewBox.y;
+
+        const newViewBoxX = mouseXInSVG - mouseXElement * (viewBox.width + viewBoxChange) / boundingRect.width;
+        const newViewBoxY = mouseYInSVG - mouseYElement * (viewBox.height + viewBoxChange) / boundingRect.height;
+
+        viewBox.width += viewBoxChange;
+        viewBox.height += viewBoxChange;
+        this.x = newViewBoxX;
+        this.y = newViewBoxY;
+        this.updateSVGView();
+    }
+}
+
+const D3Tree: React.FC<Props> = ({ data, treeType = TreeType.TidyTree, treeOrientation = TreeOrientation.Horizontal, nodeWidth, nodeHeight, paddingRight, maxSvgViewboxDimensions = 1000 }) => {
+    const d3Container = useRef<SVGSVGElement>(null);
+
+    useEffect(() => {
+        let tree: d3.ClusterLayout<unknown> | d3.TreeLayout<unknown>;
+        switch (treeType) {
+            case TreeType.Dendrogram:
+                tree = d3.cluster();
+                break;
+            default:
+            case TreeType.TidyTree:
+                tree = d3.tree();
+                break;
+        }
+        switch (treeOrientation) {
+            case TreeOrientation.Horizontal:
+                // For horizontal tree, width and height are flipped, as are x and y
+                tree.nodeSize([nodeHeight, nodeWidth]);
+                break;
+            case TreeOrientation.Vertical:
+                tree.nodeSize([nodeWidth, nodeHeight]);
+        }
+
+        const hierarchy: CustomNode = d3.hierarchy(data, (datum: any) => {
+            if (datum === undefined || datum === null) {
+                return;
+            }
+            else if (!(datum instanceof Object)) {
+                return [null];
+            }
+            datum = datum as Object;
+            return Object.values(datum);
+        });
+
+        hierarchy.descendants()[0].label = "[Root]";
+        setHierarchyLabels(hierarchy);
+        const nodes: CustomPointNode = tree(hierarchy);
+
+        // Center the tree
+        // Calculate min and max x values (which are height)
+        // Tree is reflected, so x is height and y is width
+        let x0 = Infinity;
+        let x1 = -x0;
+        let y0 = Infinity;
+        let y1 = -y0;
+        nodes.each(d => {
+            if (d.x > x1) {
+                x1 = d.x;
+            }
+            if (d.x < x0) {
+                x0 = d.x;
+            }
+            if (d.y > y1) {
+                y1 = d.y;
+            }
+            if (d.y < y0) {
+                y0 = d.y;
+            }
+        });
+
+        // Clear old rendered content
+        d3Container.current?.replaceChildren();
+
+        const viewBoxWidth = y1 + 2 * nodeWidth + paddingRight;
+        const viewBoxHeight = x1 - x0 + nodeHeight * 2;
+        // Fit both width and height and keep uniform scaling on both x and y
+        const viewBoxDimensions = Math.min(Math.max(viewBoxWidth, viewBoxHeight), maxSvgViewboxDimensions);
+
+        const rootSvg = d3.select(d3Container.current);
+
+        switch (treeOrientation) {
+            case TreeOrientation.Horizontal: {
+                const leftPadding = 15;
+                const viewBoxY = Math.max(x0 - nodeWidth, -maxSvgViewboxDimensions / 2)
+                rootSvg?.attr("viewBox", [-leftPadding, viewBoxY, viewBoxDimensions, viewBoxDimensions]);
+                break;
+            }
+            case TreeOrientation.Vertical: {
+                const topPadding = 15;
+                const viewBoxX = Math.max(x0 - nodeWidth, -maxSvgViewboxDimensions / 2);
+                rootSvg?.attr("viewBox", [viewBoxX, y0 - topPadding, viewBoxDimensions, viewBoxDimensions]);
+                break;
+            }
+        }
+
+        const rootG = d3.select(d3Container.current).append("g");
+
+        const rootGNode = rootG.node();
+        const rootSvgNode = rootSvg.node();
+        if (!rootGNode) {
+            console.error("Unable to select root group in SVG. Interactions will not work.");
+        } else if (!rootSvgNode) {
+            console.error("Unable to select root SVG element. Interactions will not work.");
+        } else {
+            const viewController: ViewController = new ViewController(rootSvgNode, rootGNode);
+            rootSvg.on("pointermove", (event: PointerEvent) => { viewController.handleMouseMove(event) });
+            rootSvg.on("wheel", viewController.handleWheel.bind(viewController));
+        }
+
+        const nodesLinks = nodes.links() as CustomPointLink[];
+        // Assign links to each node
+        for (const link of nodesLinks) {
+            if (!link.source.childrenLinks) {
+                link.source.childrenLinks = [];
+            }
+            link.source.childrenLinks.push(link);
+            link.target.sourceLink = link;
+        }
+
+        const linkGenerator = treeOrientation === TreeOrientation.Horizontal ?
+            (d3.linkHorizontal().source(link => [link.source.y, link.source.x]).target(link => [link.target.y, link.target.x]))
+            : (d3.linkVertical().source(link => [link.source.x, link.source.y]).target(link => [link.target.x, link.target.y]));
+
+        rootG.selectAll(styles.link)
+            ?.data(nodesLinks)
+            ?.enter()
+            ?.append("path")
+            ?.classed(styles.link, true)
+            ?.attr("d", linkGenerator)
+            ?.each((datum, index, groups) => {
+                datum.svgElement = groups[index];
+            });
+
+
+
+        const node = rootG.selectAll(".node")
+            ?.data(nodes.descendants())
+            ?.enter()
+            ?.append("g")
+            ?.classed("node", true)
+            ?.attr("transform", treeOrientation === TreeOrientation.Horizontal ?
+                        (d => `translate(${d.y}, ${d.x})`)
+                : (d => `translate(${d.x}, ${d.y})`));
+
+        node.append("circle")
+            ?.attr("r", 1.5)
+            ?.attr("class", d => styles.circleNode + " " + (d.children ? styles.circleNodeNonLeaf : styles.circleNodeLeaf))
+            ?.each((datum, index, groups) => {
+                datum.svgCircleElement = groups[index];
+            })
+            ?.on("mouseenter", function (event, datum: CustomPointNode) {
+                setChildrenOnHover(datum);
+            })
+            ?.on("mouseleave", function (event, datum: CustomPointNode) {
+                setChildrenAfterHover(datum);
+            });
+
+        const text = node.append("text")
+            ?.attr("class", styles.label)
+            ?.attr("dy", "0.32em")
+            ?.text((d, i) => d.label || "");
+
+        switch (treeOrientation) {
+            case TreeOrientation.Horizontal:
+                text
+                    ?.attr("x", d => d.children ? -3 : 3)
+                    ?.style("text-anchor", d => d.children ? "end" : "start")
+                    ?.each((d, index, elements) => d.children && replaceTextOverflowEllipsis(elements[index], nodeWidth - 8));
+                break;
+            case TreeOrientation.Vertical:
+                text
+                    ?.attr("dy", d => d.children ? "-1.75em" : "1.75em")
+                    ?.style("text-anchor", "middle")
+                    ?.each((d, index, elements) => d.children && replaceTextOverflowEllipsis(elements[index], nodeWidth));
+                break;
+        }
+
+    }, [data, treeType, treeOrientation, nodeHeight, nodeWidth, paddingRight, maxSvgViewboxDimensions]);
+
+    return (
+        <svg ref={d3Container} className={styles.mainGraph}></svg>
+    );
+}
+
+export default D3Tree;

@@ -1,0 +1,1 @@
+export type Json = string | number | boolean | null | Array<Json> | { [key: string]: Json };

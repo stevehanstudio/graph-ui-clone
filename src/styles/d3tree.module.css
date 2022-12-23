@@ -1,0 +1,53 @@
+:root {
+    --transition-time: 1s;
+}
+
+text.label {
+    paint-order: stroke;
+    stroke: white;
+    stroke-width: 2px;
+}
+
+circle.circleNode {
+    stroke: orange;
+    stroke-width: 0px;
+    transition: stroke-width var(--transition-time) ease;
+    paint-order: fill;
+}
+
+circle.circleNodeHighlight {
+    stroke-width: 1px;
+    transition: stroke-width var(--transition-time) ease;
+    paint-order: fill;
+}
+
+circle.circleNodeNonLeaf {
+    fill: red;
+}
+
+circle.circleNodeLeaf {
+    fill: blue;
+}
+
+path.link {
+    fill: none;
+    stroke: lightgray;
+    stroke-width: 0.5px;
+    transition: stroke var(--transition-time) ease, 
+        stroke-width var(--transition-time) ease;
+}
+
+path.linkHighlight {
+    stroke-width: 1px;
+    stroke: red;
+    transition: stroke var(--transition-time) ease,
+        stroke-width var(--transition-time) ease;
+}
+
+svg.mainGraph {
+    font-size: 0.2em;
+    outline: 3px black solid;
+    margin: 20px;
+    width: 1000px;
+    height: 1000px;
+}
