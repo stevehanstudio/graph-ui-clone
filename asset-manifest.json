@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Graph-UI/static/css/main.3095236c.css",
-    "main.js": "/Graph-UI/static/js/main.20acdd6b.js",
-    "index.html": "/Graph-UI/index.html",
-    "main.3095236c.css.map": "/Graph-UI/static/css/main.3095236c.css.map",
-    "main.20acdd6b.js.map": "/Graph-UI/static/js/main.20acdd6b.js.map"
+    "main.css": "/graph-ui-clone/static/css/main.3095236c.css",
+    "main.js": "/graph-ui-clone/static/js/main.75c32be5.js",
+    "index.html": "/graph-ui-clone/index.html",
+    "main.3095236c.css.map": "/graph-ui-clone/static/css/main.3095236c.css.map",
+    "main.75c32be5.js.map": "/graph-ui-clone/static/js/main.75c32be5.js.map"
   },
   "entrypoints": [
     "static/css/main.3095236c.css",
-    "static/js/main.20acdd6b.js"
+    "static/js/main.75c32be5.js"
   ]
 }
