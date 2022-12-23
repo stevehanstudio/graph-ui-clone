@@ -17,7 +17,7 @@ Kyle Wu,  Software Developer Intern
 
 - Next change into cloned folder, then
 `
-cd graph_lib
+cd graph_lib\
 npm install
 `
 
@@ -25,8 +25,8 @@ npm install
 
 I've set this project up to deploy to Github pages.  To deploy
 `
-npm predeploy
-npm deploy
+npm run predeploy\
+npm run deploy
 `
 
 ## Notes:
