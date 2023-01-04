@@ -13,7 +13,7 @@ Kyle Wu,  Software Developer Intern
 [Live demo deployed on Github Pages](https://stevehanstudio.github.io/graph-ui-clone)
 
 ## Screenshot
-<img src="graph_lib/public/graph-ui-screenshot.jpg" alt="screenshot" />
+<img src="./public/graph-ui-screenshot.jpg" alt="screenshot" />
 
 ## Installation
 
@@ -42,7 +42,7 @@ npm run deploy
 
 - I downgraded to React version to 17.0.2.  As result, useId from React 18 is not available, so I modified Ian's code to use an arbitrary string instead of useId.
 
-## Reference
+## Resources
 
 * [Material UI installation doesn't work with React 18 (Stackoverflow)](https://stackoverflow.com/questions/71713111/mui-installation-doesnt-work-with-react-18)<br/>
 * [Material UI tree view documentation](https://mui.com/material-ui/react-tree-view/).  I used the code for rich object as reference<br/>

@@ -20,9 +20,15 @@ const Component: React.FC<Props> = ({
 	const [fileError, setFileError] = useState(false)
 
 	useEffect(() => {
-		fetch('data.json')
+		fetch('data.json', {
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+			},
+		})
 			.then((response: Response) => response.json())
 			.then((result: JSONValue) => {
+				console.log('Setting', result)
 				setData(result)
 			})
 			.catch(err => {
